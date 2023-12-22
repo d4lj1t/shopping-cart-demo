@@ -24,5 +24,7 @@ module.exports = {
 		sourceType: 'module',
 	},
 	plugins: ['react'],
-	rules: {},
+	rules: {
+		'@typescript-eslint/object-curly-spacing': ['error', 'never'],
+	},
 };
