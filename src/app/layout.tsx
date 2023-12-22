@@ -1,9 +1,12 @@
 import React from 'react'
 import type { Metadata } from 'next'
-import { Inter as font } from 'next/font/google'
+import { Sevillana as font } from 'next/font/google'
 import './globals.css'
 
-const inter = font({ subsets: ['latin'] })
+const inter = font({
+  weight: '400',
+  subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
