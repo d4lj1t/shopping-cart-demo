@@ -4,9 +4,17 @@
 	"jsxSingleQuote": true,
 	"tabWidth": 3,
 	"useTabs": true,
-	"printWidth": 100000,
+	"printWidth": 1000,
 	"objectCurlySpacing": ["error", "never"],
 	"jsxBracketSameLine": true,
 	"arrowParens": "avoid",
-	"bracketSpacing": false
+	"bracketSpacing": false,
+	"overrides": [
+		{
+			"files": "*.tsx",
+			"options": {
+				"parser": "typescript"
+			}
+		}
+	]
 }
