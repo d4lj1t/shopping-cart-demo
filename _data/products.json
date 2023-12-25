@@ -1,0 +1,19 @@
+{
+  "products": [
+    {
+      "title": "item 1",
+      "currency": "£",
+      "priceValue": 50
+    },
+    {
+      "title": "item 2",
+      "currency": "£",
+      "priceValue": 150
+    },
+    {
+      "title": "item 3",
+      "currency": "£",
+      "priceValue": 250
+    }
+  ]
+}

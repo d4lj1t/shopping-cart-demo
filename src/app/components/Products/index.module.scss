@@ -1,0 +1,20 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: theme('screens.md')) {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+}
+
+.item {
+  @apply bg-gray-200 mb-20 p-10;
+  width: fit-content;
+
+  &__title {
+    font-size: 1.4rem;
+  }
+}

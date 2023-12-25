@@ -1,10 +1,10 @@
 import React from 'react';
 import {UserProvider} from '@auth0/nextjs-auth0/client';
 import type {Metadata} from 'next';
-import {Sevillana as font} from 'next/font/google';
+import {Rubik as font} from 'next/font/google';
 import './globals.css';
 
-const inter = font({
+const rubik = font({
 	weight: '400',
 	subsets: ['latin'],
 });
@@ -18,7 +18,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 	return (
 		<html lang='en'>
 			<UserProvider>
-				<body className={inter.className}>{children}</body>
+				<body className={rubik.className}>{children}</body>
 			</UserProvider>
 		</html>
 	);
