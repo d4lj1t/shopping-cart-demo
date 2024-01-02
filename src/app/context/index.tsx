@@ -1,6 +1,6 @@
 'use client';
 
-import React, {createContext, useState, type ReactNode} from 'react';
+import React, {createContext, useState, useEffect, type ReactNode} from 'react';
 import {type Product} from '@/app/types';
 
 type CartItem = Product;
@@ -17,8 +17,15 @@ export const GlobalStateProvider: React.FC<{children: ReactNode}> = ({children})
 	const [cartItems, setCartItems] = useState<CartItem[]>([]);
 	const handleAddToCart = (newItem: CartItem) => {
 		setCartItems(prevItems => [...prevItems, newItem]);
-		console.log('cartItems', newItem);
+		localStorage.setItem('cartItems', JSON.stringify(cartItems));
 	};
+
+	useEffect(() => {
+		const storedCartItems = localStorage.getItem('cartItems');
+		const parsedCartItems: Product[] = storedCartItems ? (JSON.parse(storedCartItems) as Product[]) : [];
+
+		setCartItems(parsedCartItems);
+	}, []);
 
 	const contextValue: ContextType = {
 		cartItems,

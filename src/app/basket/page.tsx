@@ -6,7 +6,7 @@ import {Context} from '@/app/context';
 import {type Product, type ContextType} from '@/app/types';
 import styles from '@/app/components/Products/index.module.scss';
 
-export default async function Basket() {
+export default function Basket() {
 	const {cartItems} = useContext(Context) as ContextType;
 	console.log('basket page', cartItems);
 	return (
