@@ -12,7 +12,7 @@ export default function Basket() {
 	return (
 		<>
 			<Link href='/home' className='flex  flex-col items-center'>Home</Link>
-			<div className='flex flex-wrap ghap-4 p-5'>
+			<div className='flex flex-wrap gap-4 p-5'>
 				{cartItems && cartItems.length > 0
 					&& cartItems.map((item: Product, index: number) => (
 						<div className={styles.item} key={index}>
