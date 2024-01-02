@@ -2,7 +2,6 @@ import React from 'react';
 import {UserProvider} from '@auth0/nextjs-auth0/client';
 import {GlobalStateProvider} from '@/app/context';
 import {getSession} from '@auth0/nextjs-auth0';
-import Link from 'next/link';
 import type {Metadata} from 'next';
 import {Rubik as font} from 'next/font/google';
 import './globals.css';
@@ -32,9 +31,6 @@ export default async function RootLayout({children}: {children: React.ReactNode}
 								</a>
 							</div>
 						)}
-						<Link href='/basket' className='flex  flex-col items-center'>
-							Basket
-						</Link>
 					</header>
 					<GlobalStateProvider>
 						<main>{children}</main>
