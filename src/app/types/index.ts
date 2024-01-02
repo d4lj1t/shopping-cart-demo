@@ -3,3 +3,8 @@ export type Product = {
 	currency: string;
 	priceValue: number;
 };
+
+export type ContextType = {
+	cartItems: Product[];
+	handleAddToCart: (newItem: Product) => void;
+};

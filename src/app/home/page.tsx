@@ -1,6 +1,7 @@
 import React from 'react';
 import {getSession} from '@auth0/nextjs-auth0';
-import Products from '@/app/components/Products';
+import ProductsPage from '@/app/components/Products';
+import {GlobalStateProvider} from '@/app/context';
 
 export default async function Home() {
 	const session = await getSession();
@@ -13,7 +14,9 @@ export default async function Home() {
 					</div>
 				</div>
 			)}
-			<Products/>
+			<GlobalStateProvider>
+				<ProductsPage/>
+			</GlobalStateProvider>
 		</div>
 	);
 }

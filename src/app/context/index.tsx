@@ -1,4 +1,6 @@
-import React, {createContext, useState, type ReactNode, type Dispatch, type SetStateAction} from 'react';
+'use client';
+
+import React, {createContext, useState, type ReactNode} from 'react';
 import {type Product} from '@/app/types';
 
 type CartItem = Product;
@@ -11,13 +13,24 @@ type ContextType = {
 
 export const Context = createContext<ContextType | undefined>(undefined);
 
-function GlobalState({children}: ContextType) {
+export const GlobalStateProvider: React.FC<{children: ReactNode}> = ({children}) => {
 	const [cartItems, setCartItems] = useState<CartItem[]>([]);
-	function handleAddToCart(newItem: CartItem) {
-		setCartItems((prevItems: Product[]) => [...prevItems, newItem]);
-	}
+	const handleAddToCart = (newItem: CartItem) => {
+		setCartItems(prevItems => [...prevItems, newItem]);
+		console.log('cartItems', newItem);
+	};
 
-	return <Context.Provider value={{cartItems, handleAddToCart, children}}>{children}</Context.Provider>;
-}
+	const contextValue: ContextType = {
+		cartItems,
+		handleAddToCart,
+		children,
+	};
 
-export default GlobalState;
+	return (
+		<Context.Provider value={contextValue}>
+			{children}
+		</Context.Provider>
+	);
+};
+
+export default GlobalStateProvider;
