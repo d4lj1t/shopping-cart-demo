@@ -15,9 +15,12 @@ export const Context = createContext<ContextType | undefined>(undefined);
 
 export const GlobalStateProvider: React.FC<{children: ReactNode}> = ({children}) => {
 	const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
 	const handleAddToCart = (newItem: CartItem) => {
-		setCartItems(prevItems => [...prevItems, newItem]);
-		localStorage.setItem('cartItems', JSON.stringify(cartItems));
+		const copyCartItems = [...cartItems];
+		copyCartItems.push(newItem);
+		setCartItems(copyCartItems);
+		localStorage.setItem('cartItems', JSON.stringify(copyCartItems));
 	};
 
 	useEffect(() => {
