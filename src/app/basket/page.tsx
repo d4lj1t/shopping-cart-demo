@@ -7,8 +7,8 @@ import {type Product, type ContextType} from '@/app/types';
 import styles from '@/app/components/Products/index.module.scss';
 
 export default function Basket() {
-	const {cartItems} = useContext(Context) as ContextType;
-	console.log('basket page', cartItems);
+	const {cartItems, removeFromCart} = useContext(Context) as ContextType;
+
 	return (
 		<>
 			<Link href='/home' className='flex  flex-col items-center'>Home</Link>
@@ -21,7 +21,9 @@ export default function Basket() {
 								{item.currency}
 								{item.priceValue}
 							</h1>
-							<button className='p-2 bg-blue-200 cursor-pointer mt-5'>Remove from basket</button>
+							<button onClick={() => {
+								removeFromCart(index);
+							}} className='p-2 bg-blue-200 cursor-pointer mt-5'>Remove from basket</button>
 						</div>
 					))
 				}

@@ -9,6 +9,7 @@ type ContextType = {
 	children: ReactNode;
 	cartItems: CartItem[];
 	handleAddToCart: (newItem: CartItem) => void;
+	removeFromCart: (index: number) => void;
 };
 
 export const Context = createContext<ContextType | undefined>(undefined);
@@ -16,9 +17,16 @@ export const Context = createContext<ContextType | undefined>(undefined);
 export const GlobalStateProvider: React.FC<{children: ReactNode}> = ({children}) => {
 	const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
+	const copyCartItems = [...cartItems];
 	const handleAddToCart = (newItem: CartItem) => {
-		const copyCartItems = [...cartItems];
 		copyCartItems.push(newItem);
+		setCartItems(copyCartItems);
+		localStorage.setItem('cartItems', JSON.stringify(copyCartItems));
+	};
+
+	const removeFromCart = (index: number) => {
+		console.log(index);
+		copyCartItems.splice(index, 1);
 		setCartItems(copyCartItems);
 		localStorage.setItem('cartItems', JSON.stringify(copyCartItems));
 	};
@@ -33,6 +41,7 @@ export const GlobalStateProvider: React.FC<{children: ReactNode}> = ({children})
 	const contextValue: ContextType = {
 		cartItems,
 		handleAddToCart,
+		removeFromCart,
 		children,
 	};
 

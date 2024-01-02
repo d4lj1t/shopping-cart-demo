@@ -7,4 +7,5 @@ export type Product = {
 export type ContextType = {
 	cartItems: Product[];
 	handleAddToCart: (newItem: Product) => void;
+	removeFromCart: (index: number) => void;
 };
