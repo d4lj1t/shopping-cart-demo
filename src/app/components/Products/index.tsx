@@ -1,32 +1,49 @@
 'use client';
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {type Product} from '@/app/types';
 import Products from '@/app/components/Products/products';
 
-async function getProducts(): Promise<Product[]> {
-	try {
-		const res = await fetch('/api/products', {
-			method: 'GET',
-		});
+export default function ProductsPage() {
+	const [loading, setLoading] = useState(false);
+	const [products, setProducts] = useState<Product[]>([]);
 
-		if (!res.ok) {
-			throw new Error(`HTTP error! Status: ${res.status}`);
-		}
+	useEffect(() => {
+		const fetchDataFromApi = () => {
+			setLoading(true);
+			fetch('/api/products', {
+				headers: {
+					Accept: 'application/json',
+					method: 'GET',
+				},
+			})
+				.then(async response => {
+					if (!response.ok) {
+						throw new Error(`HTTP error! Status: ${response.status}`);
+					}
 
-		const data = await res.json() as Product[];
-		return data;
-	} catch (error) {
-		console.error('Error in getProducts:', error);
-		throw new Error('Failed to fetch products');
-	}
-}
+					return response.json();
+				})
+				.then(data => {
+					setProducts(data.products as Product[]);
+				})
+				.catch(error => {
+					console.error('Error in fetchDataFromApi:', error);
+				})
+				.finally(() => {
+					setLoading(false);
+				});
+		};
 
-export default async function ProductsPage(): Promise<React.ReactElement> {
-	const products: Product[] = await getProducts();
+		fetchDataFromApi();
+	}, []);
 
 	return (
-		<Products products={products}/>
+		<>
+			{products.length > 0 && (
+				<Products products={products} />
+			)}
+		</>
 	);
 }
