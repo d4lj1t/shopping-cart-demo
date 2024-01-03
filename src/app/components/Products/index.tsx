@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import {type Product} from '@/app/types';
@@ -5,7 +7,9 @@ import Products from '@/app/components/Products/products';
 
 async function getProducts(): Promise<Product[]> {
 	try {
-		const res = await fetch('http://localhost:4000/products');
+		const res = await fetch('/api/products', {
+			method: 'GET',
+		});
 
 		if (!res.ok) {
 			throw new Error(`HTTP error! Status: ${res.status}`);
