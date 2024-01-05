@@ -21,14 +21,12 @@ export const GlobalStateProvider: React.FC<{children: ReactNode}> = ({children})
 	const handleAddToCart = (newItem: CartItem) => {
 		copyCartItems.push(newItem);
 		setCartItems(copyCartItems);
-		localStorage.setItem('cartItems', JSON.stringify(copyCartItems));
 	};
 
 	const removeFromCart = (index: number) => {
 		console.log(index);
 		copyCartItems.splice(index, 1);
 		setCartItems(copyCartItems);
-		localStorage.setItem('cartItems', JSON.stringify(copyCartItems));
 	};
 
 	useEffect(() => {
