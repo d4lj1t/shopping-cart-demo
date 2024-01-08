@@ -2,6 +2,7 @@
 
 import React, {createContext, useState, useEffect, type ReactNode} from 'react';
 import {type Product} from '@/app/types';
+import {postCartItem} from '@/app/services/postCartItem';
 
 type CartItem = Product;
 
@@ -18,13 +19,17 @@ export const GlobalStateProvider: React.FC<{children: ReactNode}> = ({children})
 	const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
 	const copyCartItems = [...cartItems];
-	const handleAddToCart = (newItem: CartItem) => {
-		copyCartItems.push(newItem);
-		setCartItems(copyCartItems);
+	const handleAddToCart = async (newItem: CartItem) => {
+		try {
+			await postCartItem(newItem);
+			copyCartItems.push(newItem);
+			setCartItems(copyCartItems);
+		} catch (error) {
+			console.log('Failed to post:', error);
+		}
 	};
 
 	const removeFromCart = (index: number) => {
-		console.log(index);
 		copyCartItems.splice(index, 1);
 		setCartItems(copyCartItems);
 	};

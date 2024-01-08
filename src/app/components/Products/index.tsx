@@ -4,7 +4,11 @@ import {type Product} from '@/app/types';
 import Products from '@/app/components/Products/products';
 import {baseApiUrl} from '@/app/constants';
 
-async function getProducts(): Promise<Product[]> {
+type ErrorResponse = {
+	error: string;
+};
+
+async function getProducts(): Promise<Product[] | ErrorResponse> {
 	try {
 		const res = await fetch(`${baseApiUrl}/api/products`);
 
@@ -16,12 +20,19 @@ async function getProducts(): Promise<Product[]> {
 		return data;
 	} catch (error) {
 		console.error('Error in getProducts:', error);
-		throw new Error('Failed to fetch products');
+		const errorMessage = error instanceof Error && error.message ? error.message : 'Failed to fetch products';
+		const errorResponse: ErrorResponse = {error: errorMessage};
+
+		return errorResponse;
 	}
 }
 
 export default async function ProductsPage(): Promise<React.ReactElement> {
-	const products: Product[] = await getProducts();
+	const products: Product[] | ErrorResponse = await getProducts();
+
+	if ('error' in products) {
+		return <p>Error: {products.error}</p>;
+	}
 
 	return (
 		<>
