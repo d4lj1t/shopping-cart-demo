@@ -1,17 +1,13 @@
-'use client';
-
-import React, {useContext} from 'react';
-import {Context} from '@/app/context';
-import {type Product, type ContextType} from '@/app/types';
+import React from 'react';
+import {type Product} from '@/app/types';
 import styles from './index.module.scss';
+import AddButton from './addButton';
 
 type ProductsProps = {
 	products: Product[];
 };
 
 export default function Products({products}: ProductsProps): React.ReactNode {
-	const {handleAddToCart} = useContext(Context) as ContextType;
-
 	return (
 		<>
 			<div className={styles.container}>
@@ -22,13 +18,7 @@ export default function Products({products}: ProductsProps): React.ReactNode {
 							{product.currency}
 							{product.priceValue}
 						</h1>
-						<button
-							onClick={() => {
-								handleAddToCart(product);
-							}}
-							className='p-2 bg-blue-200 cursor-pointer mt-5'>
-							Add to basket
-						</button>
+						<AddButton item={product} />
 					</div>
 				))}
 			</div>
