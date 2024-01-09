@@ -2,8 +2,6 @@ import {type NextRequest, NextResponse} from 'next/server';
 import connectToMongoDb from '@/app/libs/mongodb';
 import basketModel from '@/app/models/basket';
 
-// Remove the type InternalRequest, as it's not necessary in this case
-
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export async function DELETE(request: NextRequest) {
 	try {
