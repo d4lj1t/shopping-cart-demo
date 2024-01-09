@@ -1,17 +1,15 @@
-import {NextResponse} from 'next/server';
+import {type NextRequest, NextResponse} from 'next/server';
 import connectToMongoDb from '@/app/libs/mongodb';
 import basketModel from '@/app/models/basket';
 
-type InternalRequest = {
-	url: string;
-};
+// Remove the type InternalRequest, as it's not necessary in this case
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export async function DELETE(request: Record<symbol, InternalRequest>) {
+export async function DELETE(request: NextRequest) {
 	try {
 		await connectToMongoDb();
 
-		const id = new URL(request[Symbol('internal request')].url).searchParams.get('id') as string | undefined;
+		const id = new URL(request.url).searchParams.get('id') as string | undefined;
 
 		if (!id) {
 			return NextResponse.json({message: 'Missing ID parameter'}, {status: 400});
@@ -29,4 +27,3 @@ export async function DELETE(request: Record<symbol, InternalRequest>) {
 		return NextResponse.json({message: 'Internal server error'}, {status: 500});
 	}
 }
-
