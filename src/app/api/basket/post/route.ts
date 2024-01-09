@@ -1,4 +1,5 @@
 import {NextResponse} from 'next/server';
+import {getSession} from '@auth0/nextjs-auth0';
 import {type Product} from '@/app/types';
 import connectToMongoDb from '@/app/libs/mongodb';
 import basketModel from '@/app/models/basket';
@@ -7,9 +8,19 @@ import basketModel from '@/app/models/basket';
 export async function POST(request: {json: () => Promise<Product>}) {
 	try {
 		await connectToMongoDb();
+
+		const session = await getSession();
+
+		if (!session?.accessToken || !session.user) {
+			console.log('Invalid or missing access token or user in the session');
+			return NextResponse.json({error: 'Invalid or missing access token or user in the session'}, {status: 401});
+		}
+
+		const userId = session.user.sub as string;
+
 		const {title, currency, priceValue} = await request.json();
 
-		await basketModel.create({title, currency, priceValue});
+		await basketModel.create({userId, title, currency, priceValue});
 
 		return NextResponse.json({message: 'item added to basket'}, {status: 201});
 	} catch (error: any) {

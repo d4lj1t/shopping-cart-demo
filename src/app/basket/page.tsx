@@ -10,7 +10,9 @@ type ErrorResponse = {
 
 async function getBasket(): Promise<Product[] | ErrorResponse> {
 	try {
-		const res = await fetch(`${baseApiUrl}/api/basket/get`);
+		const res = await fetch(`${baseApiUrl}/api/basket/get`, {
+			method: 'GET',
+		});
 
 		if (!res.ok) {
 			throw new Error(`HTTP error! Status: ${res.status}`);
