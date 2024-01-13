@@ -5,6 +5,7 @@ import Link from 'next/link';
 import {type Product} from '@/app/types';
 import styles from '@/app/components/Products/index.module.scss';
 import {baseApiUrl} from '@/app/constants';
+import Loading from '@/app/basket/loading';
 
 type ErrorResponse = {
 	error: string;
@@ -40,10 +41,10 @@ export default function Basket() {
 
 	return (
 		<>
+			{loading && <Loading />}
 			<Link href='/home' className='flex  flex-col items-center'>
 				Home
 			</Link>
-			{loading && <div>Loading...</div>}
 			<div className='flex flex-wrap gap-4 p-5'>
 				{basket !== undefined
 					&& basket.length > 0
