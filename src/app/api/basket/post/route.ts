@@ -1,11 +1,11 @@
-import {NextResponse} from 'next/server';
+import {type NextRequest, NextResponse} from 'next/server';
 import {getSession} from '@auth0/nextjs-auth0';
 import {type Product} from '@/app/types';
 import connectToMongoDb from '@/app/libs/mongodb';
 import basketModel from '@/app/models/basket';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export async function POST(request: {json: () => Promise<Product>}) {
+export async function POST(request: NextRequest) {
 	try {
 		await connectToMongoDb();
 
@@ -18,7 +18,7 @@ export async function POST(request: {json: () => Promise<Product>}) {
 
 		const userId = session.user.sub as string;
 
-		const {title, currency, priceValue} = await request.json();
+		const {title, currency, priceValue} = await request.json() as Product;
 
 		await basketModel.create({userId, title, currency, priceValue});
 
