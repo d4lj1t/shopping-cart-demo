@@ -1,11 +1,10 @@
 import {type NextRequest, NextResponse} from 'next/server';
-import {getSession} from '@auth0/nextjs-auth0';
-import {Product} from '@/app/types';
+import {getSession, withApiAuthRequired} from '@auth0/nextjs-auth0';
 import connectToMongoDb from '@/app/libs/mongodb';
 import basketModel from '@/app/models/basket';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export async function GET(request: NextRequest) {
+const GET = withApiAuthRequired(async (request: NextRequest) => {
 	try {
 		await connectToMongoDb();
 
@@ -36,4 +35,6 @@ export async function GET(request: NextRequest) {
 
 		return NextResponse.json({error: errorMessage}, {status: 500});
 	}
-}
+});
+
+export {GET};
